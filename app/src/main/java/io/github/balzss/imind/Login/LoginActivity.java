@@ -4,14 +4,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
+import android.text.Editable;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import io.github.balzss.imind.AccountManager;
 import io.github.balzss.imind.MainActivity;
 import io.github.balzss.imind.PreferencesHelper;
@@ -20,20 +24,28 @@ import io.github.balzss.imind.Register.RegisterActivity;
 
 public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implements LoginView {
 
-    EditText usernameView;
-    EditText passwordView;
-    TextView hintText;
+    @BindView(R.id.login_button) Button loginButton;
+    @BindView(R.id.username_text) EditText usernameView;
+    @BindView(R.id.password_text) EditText passwordView;
+    @BindView(R.id.hint_text) TextView hintText;
 
     @Override
     protected void onCreate(Bundle savedState){
         super.onCreate(savedState);
         setContentView(R.layout.activity_login);
 
-        usernameView = (EditText)findViewById(R.id.username_text);
-        passwordView = (EditText)findViewById(R.id.password_text);
-        hintText = (TextView)findViewById(R.id.hint_text);
+        ButterKnife.bind(this);
 
         presenter.setHintText();
+    }
+
+    @OnTextChanged({R.id.username_text, R.id.password_text})
+    protected void handleTextChange(Editable editable) {
+        if(usernameView.getText().length() == 0 || passwordView.getText().length() == 0){
+            loginButton.setEnabled(false);
+        } else if(!loginButton.isEnabled()){
+            loginButton.setEnabled(true);
+        }
     }
 
     @Override // Called internally by Mosby
@@ -43,12 +55,12 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     }
 
     @OnClick(R.id.login_button)
-    public void onLoginButtonClicked(View v){
+    public void onLoginButtonClicked(){
         presenter.validateUser(usernameView.getText().toString(), passwordView.getText().toString());
     }
 
     @OnClick(R.id.register_button)
-    public void onRegisterButtonClicked(View v){
+    public void onRegisterButtonClicked(){
         Intent myIntent = new Intent(this, RegisterActivity.class);
         startActivity(myIntent);
     }

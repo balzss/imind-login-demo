@@ -10,30 +10,27 @@ import android.widget.TextView;
 
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.balzss.imind.Login.LoginActivity;
 import io.github.balzss.imind.Register.RegisterActivity;
 
 public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView {
 
-    TextView notLoggedInView;
-    TextView usernameView;
-    TextView helloTextView;
-    Button loginButton;
-    Button registerButton;
-    Button signOutButton;
+    @BindView(R.id.not_logged_in_view) TextView notLoggedInView;
+    @BindView(R.id.username_text) TextView usernameView;
+    @BindView(R.id.hello_text) TextView helloTextView;
+    @BindView(R.id.login_button) Button loginButton;
+    @BindView(R.id.register_button) Button registerButton;
+    @BindView(R.id.signout_button) Button signOutButton;
 
     @Override
     protected void onCreate(Bundle savedState){
         super.onCreate(savedState);
         setContentView(R.layout.activity_main);
 
-        helloTextView = (TextView)findViewById(R.id.hello_text);
-        notLoggedInView = (TextView)findViewById(R.id.not_logged_in_view);
-        usernameView = (TextView)findViewById(R.id.username_text);
-        loginButton = (Button)findViewById(R.id.login_button);
-        registerButton = (Button)findViewById(R.id.register_button);
-        signOutButton = (Button)findViewById(R.id.signout_button);
+        ButterKnife.bind(this);
 
         presenter.setLoginText();
     }
@@ -45,15 +42,15 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     }
 
     @OnClick(R.id.signout_button)
-    public void signOut(View v) { presenter.signOut(); }
+    public void signOut() { presenter.signOut(); }
 
     @OnClick(R.id.login_button)
-    public void onLoginButtonClicked(View v){
+    public void onLoginButtonClicked(){
         goToLoginActivity();
     }
 
     @OnClick(R.id.register_button)
-    public void onRegisterButtonClicked(View v){
+    public void onRegisterButtonClicked(){
         goToRegisterActivity();
     }
 

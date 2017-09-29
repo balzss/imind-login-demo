@@ -23,10 +23,9 @@
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onLoginButtonClicked"
-        android:text="Login"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:text="Login" />
 
     <Button
         android:id="@+id/register_button"
@@ -34,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/login_button"
         android:layout_below="@+id/login_button"
-        android:onClick="onRegisterButtonClicked"
         android:text="Register" />
 
     <Button
@@ -43,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/register_button"
         android:layout_below="@+id/register_button"
-        android:onClick="signOut"
         android:text="Sign out" />
 
     <TextView
