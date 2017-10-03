@@ -55,6 +55,6 @@
         style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/change_to_register" />
+        android:text="@string/change_to_login" />
 
 </LinearLayout>

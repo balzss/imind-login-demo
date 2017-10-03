@@ -8,5 +8,6 @@
     <string name="register">Register</string>
     <string name="change_to_register">Register new user instead</string>
     <string name="change_to_login">Login existing user instead</string>
+    <string name="start_service">Start service</string>
 
 </resources>

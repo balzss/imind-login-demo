@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 
@@ -17,8 +20,9 @@ import io.github.balzss.imind.presenter.SignedInPresenter;
 
 public class SignedInFragment extends MvpFragment<SignedInView, SignedInPresenter> implements SignedInView {
 
-    @BindView(R.id.hello_textview)
-    TextView helloTextView;
+    @BindView(R.id.hello_textview) TextView helloTextView;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.start_service_button) Button startServiceButton;
 
     public SignedInFragment() {
         // Required empty public constructor
@@ -37,11 +41,8 @@ public class SignedInFragment extends MvpFragment<SignedInView, SignedInPresente
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signed_in, container, false);
-
         ButterKnife.bind(this, view);
-
         return view;
     }
 
@@ -56,6 +57,12 @@ public class SignedInFragment extends MvpFragment<SignedInView, SignedInPresente
         presenter.signOut();
     }
 
+    @OnClick(R.id.start_service_button)
+    public void onStartServiceButtonCLicked(){
+        startServiceButton.setEnabled(false);
+        presenter.startProgressbarService();
+    }
+
     @Override
     public void showWelcomeText(String username) {
         helloTextView.setText("Hello " + username);
@@ -64,5 +71,21 @@ public class SignedInFragment extends MvpFragment<SignedInView, SignedInPresente
     @Override
     public void showLoginScreen() {
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void setProgress(int progress) {
+        progressBar.setProgress(progress);
+    }
+
+    @Override
+    public void finishProgress() {
+        progressBar.setProgress(0);
+        startServiceButton.setEnabled(true);
+    }
+
+    @Override
+    public void showRunningWarn() {
+        Toast.makeText(getActivity(), "service already running", Toast.LENGTH_SHORT).show();
     }
 }
