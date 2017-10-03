@@ -1,4 +1,4 @@
-package io.github.balzss.imind.Login;
+package io.github.balzss.imind.view;
 
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 
@@ -8,9 +8,9 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
 
 public interface LoginView extends MvpView {
 
-    void goToMainActivity();
-
     void showLoginError(String errorMsg);
 
-    void setHintText(String hintText);
+    void showHint(String hintText);
+
+    void showSignedInFragment();
 }

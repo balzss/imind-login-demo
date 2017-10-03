@@ -1,13 +1,23 @@
-package io.github.balzss.imind;
+package io.github.balzss.imind.helper;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-public class AccountManager {
+public class PreferencesHelper {
 
     SharedPreferences preferences;
 
-    public AccountManager(SharedPreferences preferences){
-        this.preferences = preferences;
+    public PreferencesHelper(Context context){
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public boolean isLoggedIn(){
+        return preferences.getBoolean("loggedIn", false);
+    }
+
+    public void setLoggedIn(boolean state){
+        preferences.edit().putBoolean("loggedIn", state).apply();
     }
 
     public boolean authUser(String username, String password){
@@ -21,7 +31,7 @@ public class AccountManager {
         SharedPreferences.Editor Ed = preferences.edit();
         Ed.putString("username", username);
         Ed.putString("password", password);
-        Ed.commit();
+        Ed.apply();
     }
 
     public String getHint(){
